@@ -4,13 +4,14 @@ let operator = '';
 // function temp(e){
 //     console.log(e);
 // }
-const buttons = document.querySelectorAll('.key');
+const numbers = document.querySelectorAll('.number');
 const display = document.querySelector('.calcScreen');
-const operatorArray = ['=', '+', '/', '*', '-'];
+const operators = document.querySelectorAll('.operator');
+const allClearButton = document.getElementById('clear');
 //creat nodelist for operators
-const opList = document.querySelectorAll('.operator');
 
 
+//FUNCTIONS
 const add = function(a, b){
     return a + b;
 }
@@ -46,17 +47,19 @@ const allClear = function(){
     operator = null;
     display.textContent = '';
 }
-//variables
 
 
-//event listeners
-opList.forEach(operator => operator.addEventListener('click', () => {
+
+//event listeners 
+allClearButton.addEventListener('click', allClear);
+operators.forEach(operator => operator.addEventListener('click', () => {
     display.innerText = '';
+    display.innerText = `${operator.innerText}`;
 }));
 
-buttons.forEach(button => button.addEventListener('click', () => {
+numbers.forEach(number => number.addEventListener('click', () => {
     // console.log(button.innerText);
-    display.textContent += `${button.innerText}`;
+    display.textContent += `${number.innerText}`;
 
 }));
 
