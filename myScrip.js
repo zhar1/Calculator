@@ -1,6 +1,6 @@
-let firstNum = 0;
-let lastNum = 0;
-let operator = '';
+let firstNum = null;
+let lastNum = null;
+let symbol = null;
 // function temp(e){
 //     console.log(e);
 // }
@@ -8,6 +8,7 @@ const numbers = document.querySelectorAll('.number');
 const display = document.querySelector('.calcScreen');
 const operators = document.querySelectorAll('.operator');
 const allClearButton = document.getElementById('clear');
+const equalsButton = document.querySelector('.equal');
 //creat nodelist for operators
 
 
@@ -31,35 +32,64 @@ const divide = function(a, b){
 
 const operate  = function(a, operator, b){
     switch (operator){
-        case '+':
-            return add(a, b)
+        case '+': 
+            return add(Number(a), Number(b))
         case '-':
-            return subtract(a, b)
+            return subtract(Number(a), Number(b))
         case '*':
-            return multiply(a,b)
+            return multiply(Number(a), Number(b))
         case '/':
-            return divide(a, b);
+            return divide(Number(a), Number(b));
     }
 }
 const allClear = function(){
     firstNum = null;
     lastNum = null;
-    operator = null;
+    symbol = null;
     display.textContent = '';
+}
+const equal = function(){
+    if(firstNum && lastNum && symbol){
+        display.textContent = operate(firstNum, symbol, lastNum);
+    }
 }
 
 
 
 //event listeners 
 allClearButton.addEventListener('click', allClear);
+
 operators.forEach(operator => operator.addEventListener('click', () => {
-    display.innerText = '';
-    display.innerText = `${operator.innerText}`;
+    const currentOperator = operator.innerText;
+    // display.innerText = currentOperator;
+    // symbol = currentOperator;
+    if(lastNum){
+        firstNum = operate(firstNum, symbol, lastNum);
+        display.textContent = firstNum;
+    } else {
+        symbol = currentOperator;
+        display.textContent = currentOperator;
+    }
 }));
 
 numbers.forEach(number => number.addEventListener('click', () => {
     // console.log(button.innerText);
-    display.textContent += `${number.innerText}`;
+    // display.textContent += currentNumber;
+    const currentNumber = number.innerText;
+    if(!firstNum){
+        firstNum = currentNumber;
+        display.textContent = currentNumber;
+    } else if(!symbol){
+        firstNum += currentNumber;
+        display.textContent += currentNumber;
+    } else if(!lastNum){
+        lastNum = currentNumber;
+        display.textContent = currentNumber;
+    } else {
+        lastNum += currentNumber;
+        display.textContent += currentNumber;
+    }
+    
 
 }));
 
