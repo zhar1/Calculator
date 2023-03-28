@@ -58,14 +58,14 @@ const equal = function(){
 
 //event listeners 
 allClearButton.addEventListener('click', allClear);
-
+equalsButton.addEventListener('click', equal);
 operators.forEach(operator => operator.addEventListener('click', () => {
     const currentOperator = operator.innerText;
-    // display.innerText = currentOperator;
-    // symbol = currentOperator;
     if(lastNum){
         firstNum = operate(firstNum, symbol, lastNum);
-        display.textContent = firstNum;
+        lastNum = firstNum;
+        symbol = currentOperator;
+       
     } else {
         symbol = currentOperator;
         display.textContent = currentOperator;
@@ -73,8 +73,6 @@ operators.forEach(operator => operator.addEventListener('click', () => {
 }));
 
 numbers.forEach(number => number.addEventListener('click', () => {
-    // console.log(button.innerText);
-    // display.textContent += currentNumber;
     const currentNumber = number.innerText;
     if(!firstNum){
         firstNum = currentNumber;
@@ -83,6 +81,9 @@ numbers.forEach(number => number.addEventListener('click', () => {
         firstNum += currentNumber;
         display.textContent += currentNumber;
     } else if(!lastNum){
+        lastNum = currentNumber;
+        display.textContent = currentNumber;
+    } else if(firstNum === lastNum){
         lastNum = currentNumber;
         display.textContent = currentNumber;
     } else {
