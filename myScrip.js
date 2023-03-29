@@ -1,15 +1,14 @@
+//variables
 let firstNum = null;
 let lastNum = null;
 let symbol = null;
-// function temp(e){
-//     console.log(e);
-// }
+
 const numbers = document.querySelectorAll('.number');
 const display = document.querySelector('.calcScreen');
 const operators = document.querySelectorAll('.operator');
 const allClearButton = document.getElementById('clear');
 const equalsButton = document.querySelector('.equal');
-//creat nodelist for operators
+
 
 
 //FUNCTIONS
@@ -49,8 +48,12 @@ const allClear = function(){
     display.textContent = '';
 }
 const equal = function(){
+    //if all parameters exist calculate expression and set lastNum and symbol to null
     if(firstNum && lastNum && symbol){
         display.textContent = operate(firstNum, symbol, lastNum);
+        firstNum = display.textContent;
+        lastNum = null;
+        symbol = null;
     }
 }
 
@@ -61,29 +64,32 @@ allClearButton.addEventListener('click', allClear);
 equalsButton.addEventListener('click', equal);
 operators.forEach(operator => operator.addEventListener('click', () => {
     const currentOperator = operator.innerText;
-    if(lastNum){
-        firstNum = operate(firstNum, symbol, lastNum);
-        lastNum = firstNum;
+    //if only first number update the symbol(operator) to current operator and display it
+    if (firstNum && !symbol && !lastNum){
         symbol = currentOperator;
-       
-    } else {
+        display.innerText = currentOperator;
+    } else if (firstNum && symbol && !lastNum){
+        display.innerText = operate(firstNum, symbol, firstNum);
+        lastNum = null;
+        firstNum = display.innerText;
         symbol = currentOperator;
-        display.textContent = currentOperator;
+    } else if (firstNum && lastNum && symbol){
+        display.innerText = operate(firstNum, symbol, lastNum);
+        lastNum = null;
+        firstNum = display.innerText;
+        symbol = currentOperator;
     }
 }));
 
 numbers.forEach(number => number.addEventListener('click', () => {
     const currentNumber = number.innerText;
-    if(!firstNum){
+    if(!firstNum && !symbol && !lastNum){
         firstNum = currentNumber;
         display.textContent = currentNumber;
-    } else if(!symbol){
+    } else if(firstNum && !symbol && !lastNum){
         firstNum += currentNumber;
         display.textContent += currentNumber;
-    } else if(!lastNum){
-        lastNum = currentNumber;
-        display.textContent = currentNumber;
-    } else if(firstNum === lastNum){
+    } else if(firstNum && symbol && !lastNum){
         lastNum = currentNumber;
         display.textContent = currentNumber;
     } else {
@@ -95,4 +101,6 @@ numbers.forEach(number => number.addEventListener('click', () => {
 }));
 
 //next step 
+
+// make a function to update display and variables
 
