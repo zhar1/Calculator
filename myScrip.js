@@ -1,4 +1,5 @@
 //variables
+let displayValue = '0';
 let firstNum = null;
 let lastNum = null;
 let symbol = null;
@@ -45,7 +46,7 @@ const allClear = function(){
     firstNum = null;
     lastNum = null;
     symbol = null;
-    display.textContent = '';
+    display.textContent = '0';
 }
 const equal = function(){
     //if all parameters exist calculate expression and set lastNum and symbol to null
@@ -61,7 +62,9 @@ const equal = function(){
 
 //event listeners 
 allClearButton.addEventListener('click', allClear);
+
 equalsButton.addEventListener('click', equal);
+
 operators.forEach(operator => operator.addEventListener('click', () => {
     const currentOperator = operator.innerText;
     //if only first number update the symbol(operator) to current operator and display it
