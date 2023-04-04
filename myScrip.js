@@ -13,16 +13,16 @@ const equalsButton = document.querySelector('.equal');
 
 
 //FUNCTIONS
-const add = function(a, b){
+function add(a, b){
     return a + b;
 }
-const subtract = function(a, b){
+function subtract(a, b){
     return a - b;
 }
-const multiply = function(a, b){
+function multiply(a, b){
     return a * b;
 }
-const divide = function(a, b){
+function divide(a, b){
     if(b === 0){
         return 'sike';
     }
@@ -30,7 +30,7 @@ const divide = function(a, b){
         return a / b;
 }
 
-const operate  = function(a, operator, b){
+function operate(a, operator, b){
     switch (operator){
         case '+': 
             return add(Number(a), Number(b))
@@ -42,13 +42,13 @@ const operate  = function(a, operator, b){
             return divide(Number(a), Number(b));
     }
 }
-const allClear = function(){
+function allClear(){
     firstNum = null;
     lastNum = null;
     symbol = null;
     display.textContent = '0';
 }
-const equal = function(){
+function equal(){
     //if all parameters exist calculate expression and set lastNum and symbol to null
     if(firstNum && lastNum && symbol){
         display.textContent = operate(firstNum, symbol, lastNum);
@@ -58,6 +58,9 @@ const equal = function(){
     }
 }
 
+function updateDisplay(someValue){
+
+}
 
 
 //event listeners 
